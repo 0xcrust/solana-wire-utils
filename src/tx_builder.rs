@@ -1,4 +1,4 @@
-use crate::jito::JitoClient;
+use crate::rpc::jito::JitoClient;
 use crate::types::{ComputeUnitLimits, PriorityFeeConfig};
 use anyhow::Context;
 use solana_client::nonblocking::rpc_client::RpcClient;

@@ -2,8 +2,8 @@ use super::confirm_task::start_transaction_confirmation_task;
 use super::types::{
     ConfirmTransactionData, SendTransactionData, TransactionId, TransactionSourceId,
 };
-use crate::jito::JitoClient;
 use crate::priofee::PriorityDetails;
+use crate::rpc::jito::JitoClient;
 use crate::types::BlockHashNotification;
 use crate::utils::spawn_retry_task;
 
