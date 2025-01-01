@@ -16,6 +16,7 @@ use solana_sdk::transaction::TransactionError;
 use tokio::sync::broadcast::Sender;
 use tokio::sync::mpsc::UnboundedSender;
 
+#[allow(clippy::too_many_arguments)]
 pub fn start_transaction_confirmation_task(
     rpc_client: Arc<RpcClient>,
     current_block_height: Arc<AtomicU64>,

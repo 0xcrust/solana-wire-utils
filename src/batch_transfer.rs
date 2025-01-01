@@ -70,19 +70,19 @@ impl BatchTokenTransfer {
                 let source_ata =
                     spl_associated_token_account::get_associated_token_address_with_program_id(
                         &copy_wallet,
-                        &token,
+                        token,
                         &spl_token::ID,
                     );
                 let destination_ata =
                     spl_associated_token_account::get_associated_token_address_with_program_id(
                         &self.destination_wallet,
-                        &token,
+                        token,
                         &spl_token::ID,
                     );
                 let create_ix = spl_associated_token_account::instruction::create_associated_token_account_idempotent(
                     &copy_wallet,
                     &self.destination_wallet,
-                    &token,
+                    token,
                     &spl_token::ID,
                 );
                 instructions.push(create_ix);
@@ -124,18 +124,21 @@ impl BatchTokenTransfer {
                 .value
                 .units_consumed;
 
-            let mut instructions = if let Some(cu) = dynamic_cu.and_then(|cu| u32::try_from(cu).ok()) {
-                let compute_ix =
+            let mut instructions =
+                if let Some(cu) = dynamic_cu.and_then(|cu| u32::try_from(cu).ok()) {
+                    let compute_ix =
                     solana_sdk::compute_budget::ComputeBudgetInstruction::set_compute_unit_limit(
                         cu + 50_000,
                     );
-                let mut vec = vec![compute_ix];
-                vec.extend(instructions);
-                vec
-            } else {
-                instructions
-            };
-            jito_tip_ix.map(|ix| instructions.push(ix));
+                    let mut vec = vec![compute_ix];
+                    vec.extend(instructions);
+                    vec
+                } else {
+                    instructions
+                };
+            if let Some(ix) = jito_tip_ix {
+                instructions.push(ix)
+            }
 
             let message = VersionedMessage::Legacy(Message::new(&instructions, Some(&copy_wallet)));
             let txn = VersionedTransaction {
@@ -154,4 +157,3 @@ impl BatchTokenTransfer {
         Ok(())
     }
 }
-

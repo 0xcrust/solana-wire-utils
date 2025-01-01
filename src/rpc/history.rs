@@ -145,7 +145,9 @@ pub async fn get_signatures_for_address(
                 break;
             }
         }
-        limit.as_mut().map(|c| *c = c.saturating_sub(results.len()));
+        if let Some(c) = limit.as_mut() {
+            *c = c.saturating_sub(results.len());
+        }
         before = Some(Signature::from_str(&earliest.signature)?);
         signatures.extend(results);
     }

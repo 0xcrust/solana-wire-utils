@@ -33,7 +33,7 @@ pub async fn get_blockhash_data_with_retry(
                 };
                 return Ok((blockhash_notif, last_valid_block_height));
             }
-            Err(e) => warn!("Retries = {}. Failed to get blockhash data", i),
+            Err(_) => warn!("retries={}. Failed to get blockhash data", i),
         }
     }
 

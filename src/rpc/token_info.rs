@@ -10,12 +10,12 @@ pub async fn get_info_for_mints(
     rpc_client: &RpcClient,
     mints: &[Pubkey],
 ) -> anyhow::Result<Vec<Option<RawMintInfo>>> {
-    let mint_accounts = get_multiple_account_data(&rpc_client, mints).await?;
+    let mint_accounts = get_multiple_account_data(rpc_client, mints).await?;
     let metadatas = mints
         .iter()
         .map(|mint| Metadata::find_pda(mint).0)
         .collect::<Vec<_>>();
-    let metadata_accounts = get_multiple_account_data(&rpc_client, &metadatas).await?;
+    let metadata_accounts = get_multiple_account_data(rpc_client, &metadatas).await?;
 
     let mut final_results = Vec::with_capacity(mints.len());
     for ((mint_account, metadata_account), mint) in mint_accounts

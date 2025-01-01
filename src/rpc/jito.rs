@@ -313,7 +313,6 @@ where
             return Err(anyhow!(
                 "unsupported encoding: {encoding}. Supported encodings: base58, base64"
             ))
-            .into()
         }
     };
     Ok(encoded)

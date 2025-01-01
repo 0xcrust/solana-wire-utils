@@ -38,7 +38,7 @@ impl PriorityDetails {
     }
 
     pub fn from_versioned_transaction(transaction: &VersionedTransaction) -> Self {
-        if let Err(_) = transaction.sanitize() {
+        if transaction.sanitize().is_err() {
             return PriorityDetails {
                 priority_fee: 0,
                 compute_unit_limit: DEFAULT_INSTRUCTION_COMPUTE_UNIT_LIMIT,
@@ -52,7 +52,7 @@ impl PriorityDetails {
     }
 
     pub fn from_versioned_message(message: &VersionedMessage) -> Self {
-        if let Err(_) = message.sanitize() {
+        if message.sanitize().is_err() {
             return PriorityDetails {
                 priority_fee: 0,
                 compute_unit_limit: DEFAULT_INSTRUCTION_COMPUTE_UNIT_LIMIT,
