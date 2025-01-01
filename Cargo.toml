@@ -1,0 +1,38 @@
+[package]
+name = "solana-wire-utils"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anchor-spl = "0.29.0"
+anyhow = "1.0.81"
+base64 = "0.22.1"
+bincode = "1.3.3"
+dashmap = "5.5.3"
+futures = "0.3.30"
+futures-util = "0.3.30"
+log = "=0.4.20"
+mpl-token-metadata = "5.1.0"
+rand = "0.8.5"
+reqwest = { version = "0.12.4", features = ["json", "native-tls"] }
+serde = { version = "1.0.203", features = ["derive"] }
+serde_json = "1.0.117"
+solana-account-decoder = "1.17"
+solana-client = "1.17"
+solana-program = "1.17"
+solana-program-runtime = "1.17"
+solana-rpc-client-api = "1.17"
+solana-sdk = "1.17"
+solana-transaction-status = "1.17"
+spl-associated-token-account = "2"
+spl-token = { version = "4.0.0", features = ["no-entrypoint"] }
+tokio = {version = "1.36.0", features = ["rt-multi-thread", "macros", "sync", "time"]}
+tokio-stream = { version = "0.1.15", features = ["sync"] }
+tokio-tungstenite = "0.23.1"
+tonic = "0.10.2"
+yellowstone-grpc-proto = { git = "https://github.com/rpcpool/yellowstone-grpc.git", tag = "v1.15.0+solana.1.18" }
+yellowstone-grpc-client = { git = "https://github.com/rpcpool/yellowstone-grpc.git", tag = "v1.15.0+solana.1.18" }
+#yellowstone-grpc-client = { git = "https://github.com/0xcrust/yellowstone-grpc.git", branch = "protoc-env" }
+#yellowstone-grpc-proto = { git = "https://github.com/0xcrust/yellowstone-grpc.git", branch = "protoc-env" }
+
+
