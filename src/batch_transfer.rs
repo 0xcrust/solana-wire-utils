@@ -13,9 +13,8 @@ use solana_sdk::signature::{Keypair, Signature, Signer};
 use solana_sdk::transaction::VersionedTransaction;
 use tokio::sync::RwLock;
 
-// todo: Bound dust-tracker list
 #[derive(Clone)]
-pub struct DustTracker {
+pub struct BatchTokenTransfer {
     transfer_amounts: Arc<RwLock<Vec<(Pubkey, u64)>>>,
     copy_keypair: Arc<Keypair>,
     rpc_client: Arc<RpcClient>,
@@ -24,15 +23,14 @@ pub struct DustTracker {
     jito_tip_amount: Arc<AtomicU64>,
 }
 
-// todo: Persistence for dust
-impl DustTracker {
+impl BatchTokenTransfer {
     pub fn new(
         keypair: Arc<Keypair>,
         rpc_client: Arc<RpcClient>,
         destination: Pubkey,
         send_txns_handle: SendTransactionsHandle,
     ) -> Self {
-        DustTracker {
+        BatchTokenTransfer {
             transfer_amounts: Default::default(),
             copy_keypair: keypair,
             rpc_client,
@@ -97,7 +95,7 @@ impl DustTracker {
                     *amount,
                 )?);
             }
-            // Append the last instruction: A jito tip
+
             let tip = self.jito_tip_amount.load(Ordering::Acquire);
             let jito_tip_ix = if tip != 0 {
                 Some(JitoClient::build_bribe_ix(&copy_wallet, tip))
